@@ -1,16 +1,29 @@
 const piano = document.querySelector('.piano');
 const pianoKeys = document.querySelector('.piano-key');
 const audio = document.querySelector('.audio');
+let flag = false;
 
 piano.addEventListener('mousedown', playAudio);
 piano.addEventListener('mousedown', makeKeyActive);
+piano.addEventListener('mousedown', playAudioMouseOver);
 window.addEventListener('keydown', playAudioKeyboard);
 window.addEventListener('keydown', makeKeyActiveKeyboard);
+document.body.addEventListener('mouseup', stopMouseMovePlay);
 
 function playAudio(event) {
+  flag = false;
   audio.src = `assets/audio/${event.target.dataset.note}.mp3`
   audio.currentTime = 0;
   audio.play();
+}
+
+function playAudioMouseOver(event) {
+  if(flag === true) return;
+  audio.src = `./assets/audio/${event.target.dataset.note}.mp3`;
+  audio.currentTime = 0;
+  audio.play();
+  piano.addEventListener('mouseover', playAudioMouseOver);
+  makeKeyActive(event);
 }
 
 function playAudioKeyboard(event) {
@@ -40,4 +53,8 @@ function makeKeyInactive(event) {
 function makeKeyInactiveKeyboard(event) {
   const pianoKey = document.getElementById(event.code);
   pianoKey.classList.remove('piano-key-active');
+}
+
+function stopMouseMovePlay() {
+  flag = true;
 }
