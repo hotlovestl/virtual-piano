@@ -4,6 +4,7 @@ const audio = document.querySelector('.audio');
 const btnContainer = document.querySelector('.btn-container');
 const btnNotes = document.querySelector('.btn-notes');
 const btnLetters = document.querySelector('.btn-letters');
+const btnFullScreen = document.querySelector('.fullscreen');
 let flag = false;
 
 piano.addEventListener('mousedown', playAudio);
@@ -13,6 +14,7 @@ window.addEventListener('keydown', playAudioKeyboard);
 window.addEventListener('keydown', makeKeyActiveKeyboard);
 document.body.addEventListener('mouseup', stopMouseMovePlay);
 btnContainer.addEventListener('click', checkBtnState);
+btnFullScreen.addEventListener('click', toggleFullScreen);
 
 
 function playAudio(event) {
@@ -79,4 +81,14 @@ function changeBtnState() {
 
 function changePianoKeysValues() {
   pianoКeys.forEach((key) => key.classList.toggle('letter'));
+}
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
 }
